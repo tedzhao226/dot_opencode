@@ -15,7 +15,7 @@
   "mcp": {
     "serena": {
       "type": "local",
-      "command": ["uvx", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "claude-code", "--project-from-cwd", "--web-dashboard-open-on-launch=false"],
+      "command": ["uvx", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "claude-code", "--project-from-cwd", "--open-web-dashboard", "false"],
       "enabled": true
     },
     "chrome-devtools": {

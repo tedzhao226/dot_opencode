@@ -155,6 +155,15 @@ When reverting code changes, always check for test file compatibility - ensure t
 
 Prefer CLI tools over MCP for portability.
 
+### Prompt Delegation
+
+When using CLI tools that accept prompts (e.g., `gemini -p`, `claude`, `aider`):
+1. Create a prompt file: `~/.cache/opencode/prompts/{tool}-{timestamp}.md`
+2. Reference the file in the CLI command: `gemini -p ~/.cache/opencode/prompts/gemini-20260304T1230.md`
+3. Delegate execution to the CLI tool
+
+This ensures prompts are versioned, reusable, and debuggable.
+
 ### Core Utilities
 
 | Tool | Purpose | Example |
@@ -189,19 +198,20 @@ Before editing: confirm call chain/usages via references.
 
 ### Model Routing
 
-Route planning or research to external models when opencode isn't the best fit.
+Use opencode's built-in model support for most models. External CLI tools only when needed.
 
-| Model | Dispatch | Use For |
-|-------|----------|---------|
-| Opus 4.6 | External agent | Complex architecture, deep reasoning |
-| Sonnet 4.6 | External agent | Default coding, clear specs |
-| Haiku | External agent | Fast research, pattern finding |
-| GPT-5.3 Codex | `codex exec --full-auto` | Deep planning, think effort control |
-| Gemini | `gemini -p` | Alternative planning perspective |
+**Built-in opencode models** (switch via `/model` or config):
+- Claude Opus, Sonnet, Haiku
+- GPT-4, GPT-4o, o1, o3
+- Other providers supported by opencode
 
-Note: `gpt-5.3-codex-spark` is NOT available on ChatGPT Plus accounts.
+**External CLI tools** (when opencode doesn't have the model):
 
-Use parallel external model dispatch when needed.
+| Tool | Model | Use For |
+|------|-------|---------|
+| `gemini -p` | Gemini 3 Pro | Alternative planning perspective, Google-specific tasks |
+
+Route planning or research to external models when opencode isn't the best fit. Use parallel external model dispatch when needed.
 
 ### Infrastructure
 
