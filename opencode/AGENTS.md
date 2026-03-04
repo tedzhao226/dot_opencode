@@ -198,20 +198,25 @@ Before editing: confirm call chain/usages via references.
 
 ### Model Routing
 
-Use opencode's built-in model support for most models. External CLI tools only when needed.
+**Native opencode agents** (configured in opencode.json, dispatch via Task tool):
 
-**Built-in opencode models** (switch via `/model` or config):
-- Claude Opus, Sonnet, Haiku
-- GPT-4, GPT-4o, o1, o3
-- Other providers supported by opencode
+| Agent | Model | Use For |
+|-------|-------|---------|
+| `opus` | Claude Opus 4.6 | Complex reasoning, architecture, multi-file refactors |
+| `codex` | GPT-5.3 Codex | Code analysis, implementation, review |
 
-**External CLI tools** (when opencode doesn't have the model):
+Dispatch: `task(subagent_type="opus", prompt="...")` or `task(subagent_type="codex", prompt="...")`
+
+**External CLI tools** (when native agents lack specific features):
 
 | Tool | Model | Use For |
 |------|-------|---------|
+| `codex exec` | Codex 5.3 | Full-auto execution with file output, think effort control |
 | `gemini -p` | Gemini 3 Pro | Alternative planning perspective, Google-specific tasks |
 
-Route planning or research to external models when opencode isn't the best fit. Use parallel external model dispatch when needed.
+**ACP (Agent Client Protocol)**:
+- Gemini CLI: Native ACP support via `gemini --acp`
+- Codex: No native ACP support; use CLI delegation or opencode native agent
 
 ### Infrastructure
 
