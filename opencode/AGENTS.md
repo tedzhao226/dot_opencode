@@ -174,7 +174,7 @@ This ensures prompts are versioned, reusable, and debuggable.
 | `tree` | Directory structure | `tree -L 2 src/` |
 | `trash` | Safe file deletion | `trash old-file.txt` (recoverable) |
 
-### Semantic Code Navigation (Serena MCP)
+### Semantic Code Navigation (Serena MCP + ast-grep CLI)
 
 When available, prefer LSP/semantic tools over text search:
 
@@ -185,6 +185,9 @@ When available, prefer LSP/semantic tools over text search:
 | Find implementations | `goToImplementation` | `rg "class.*:"` |
 | Understand structure | `getOutline` / symbol search | Read entire file |
 | Read implementation | Specific function/class body | Full file read |
+| Structural pattern search | `sg -p 'console.log($ARG)' -l ts` | `rg "console.log"` |
+| AST-aware rewrite | `sg -p 'pattern' -r 'replacement' -l ts` | `sed` / manual edit |
+| Import analysis | `sg -p 'import $$$IMPORTS from "$MOD"' -l ts` | manual grep |
 
 Before editing: confirm call chain/usages via references.
 
