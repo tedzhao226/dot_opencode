@@ -79,4 +79,26 @@ npx skills add vercel-labs/agent-skills --skill '*' -g -a opencode -y
 
 ---
 
-*Last updated: 2026-03-04*
+## 2026-03-08 — Config Sync from Claude
+
+Adapted recent Claude Code configuration changes for OpenCode.
+
+### Added
+
+- **docs/** directory (7 files): agents.md, task-routing.md, skills.md, behaviors-extended.md, behaviors-reference.md, content-safety.md, scaffolding-checkpoint.md
+- **agents/** directory (3 files): performance-analyzer.md, pr-reviewer.md, security-reviewer.md
+- **AGENTS.md**: On-demand loading index, Skill Security Audit section, Quality Control core triggers
+- **opencode.json**: `rrm` deny rule, `gh repo delete` ask rule
+- **skills/rtk** symlink
+
+### Not Ported (Claude-specific)
+
+- memory/, hooks/, planning/, plugins/, commands/
+- SSOT ownership tables (Claude memory system)
+- RTK hook-based rewriting (Claude hooks feature)
+- Session-end/memory-flush triggers (no hook support in OpenCode)
+- URL Fetch Routing (Claude-specific tool mapping)
+
+---
+
+*Last updated: 2026-03-08*

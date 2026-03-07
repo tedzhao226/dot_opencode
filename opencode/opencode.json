@@ -4,12 +4,14 @@
     "*": "allow",
     "bash": {
       "*": "allow",
+      "rrm *": "deny",
       "rm -rf *": "deny",
       "sudo *": "deny",
       "chmod 777 *": "deny",
       "git push --force *": "deny",
       "git reset --hard *": "deny",
-      "git push *": "ask"
+      "git push *": "ask",
+      "gh repo delete *": "ask"
     }
   },
   "mcp": {
