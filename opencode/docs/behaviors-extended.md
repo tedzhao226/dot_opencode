@@ -24,6 +24,10 @@ Received content to record ->
 2. Knowledge index already has relevant section to append to
 3. File naming and frontmatter format can reference existing files
 
+**When filing directly**:
+- Knowledge index = "index" not "content" -- detailed analysis goes in separate files
+- Follow existing naming conventions
+
 **Banned**:
 - Same content written to multiple files (SSOT violation)
 - Inventing new directories without precedent

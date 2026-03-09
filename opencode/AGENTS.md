@@ -151,6 +151,7 @@ No blind fixes. Four phases:
 | Stuck >15min | experience-evolution | Known issue; fix is obvious just time-consuming |
 | 3 consecutive failures | Pause, revert to debugging Phase 1 | Each failure is a different problem (not same root cause) |
 | Complex task >5 files | Suggest planning-with-files | User gave step-by-step instructions; many files but each <10 lines |
+| "create a skill" / "new skill" / "improve skill" / "skill eval" | skill-creator | Already have a complete skill and just want writing tips (use writing-skills) |
 
 ---
 
@@ -197,4 +198,4 @@ Evaluate whether to escalate to Opus or outsource to Codex.
 
 ---
 
-*Ported from CLAUDE.md (selective) -- 2026-03-08*
+*Ported from CLAUDE.md (selective) -- 2026-03-09*

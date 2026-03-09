@@ -101,4 +101,23 @@ Adapted recent Claude Code configuration changes for OpenCode.
 
 ---
 
-*Last updated: 2026-03-08*
+## 2026-03-09 -- Config Sync from Claude
+
+Minor sync from recent Claude config changes.
+
+### Added
+
+- **AGENTS.md**: `skill-creator` skill trigger in P1-P2 table
+- **docs/behaviors-extended.md**: "When filing directly" rules for knowledge base writes
+
+### Not Ported (Claude-specific)
+
+- get-shit-done (GSD) workflow system -- Claude-only project management
+- GSD agents (12 files) -- tied to GSD workflows
+- GSD commands/hooks -- Claude Code slash commands and hooks
+- settings.json defaultMode change -- Claude settings only
+- `@RTK.md` reference in CLAUDE.md -- hook-based, not portable
+
+---
+
+*Last updated: 2026-03-09*
