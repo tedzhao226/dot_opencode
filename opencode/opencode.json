@@ -35,17 +35,5 @@
       "command": ["docker", "mcp", "gateway", "run"],
       "enabled": true
     }
-  },
-  "agent": {
-    "opus": {
-      "description": "Opus 4.6 for complex reasoning, architecture decisions, and multi-file refactors",
-      "mode": "subagent",
-      "model": "anthropic/claude-opus-4-6"
-    },
-    "codex": {
-      "description": "Codex 5.3 for code analysis, implementation, and review",
-      "mode": "subagent",
-      "model": "openai/gpt-5.3-codex"
-    }
   }
 }

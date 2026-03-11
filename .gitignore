@@ -1,3 +1,6 @@
 node_modules/
 *.log
 .DS_Store
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/dot_opencode.iml
+/.idea/modules.xml
