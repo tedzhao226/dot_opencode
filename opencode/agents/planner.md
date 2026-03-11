@@ -45,18 +45,20 @@ Required files:
 2. **Question** — ask only what materially affects the plan
 3. **Create folder** — check for existing plans first, reuse if applicable
 4. **Research** — capture repo facts in findings.md
-   - Multi-area research: spawn @codex or @opus agents in parallel
+   - Multi-area research: spawn @explore agents in parallel for fast tier
+   - Standard/capable tasks: spawn @codex or @opus as appropriate
    - Single-area: explore inline
 5. **Write plan.md** — tasks in TOON format (see below)
-6. **Initialize progress.md** — assumptions and next action
+6. **Initialize progress.md` — assumptions and next action
 7. **Handoff** — print plan location and suggest @swarm
 
 ## TOON Format (Machine-Parsable)
 
 ```
 tasks[N]{id,title,depends_on,status,model,size,file}:
-  T1,Research auth patterns,,pending,opus,micro,src/auth.py
-  T2,Implement JWT validation,T1,pending,sonnet,medium,src/auth.py
+  T1,Research auth patterns,,pending,fast,micro,src/auth.py
+  T2,Implement JWT validation,T1,pending,standard,medium,src/auth.py
+  T3,Refactor core logic,T2,pending,capable,large,src/core.py
 ```
 
 Fields:
@@ -64,27 +66,30 @@ Fields:
 - `title`: short task name
 - `depends_on`: comma-separated T{n} refs or empty
 - `status`: pending | in_progress | done | failed | blocked
-- `model`: opus | sonnet | haiku (routing target, see Model Mapping)
-- `size`: micro (≤50 LOC) | medium (50-200 LOC) — larger tasks must be split
+- `model`: capable | standard | fast (routing target, see Model Mapping)
+- `size`: micro (≤50 LOC) | medium (50-200 LOC) | large (>200 LOC)
 - `file`: primary file path (optional, helps swarm give context)
 
 ## Model Mapping (Tier-Based Routing)
 
-| Signal | Dispatch |
-|--------|----------|
-| Refactor, debug, migrate, architecture | @opus |
-| Multi-file (>3) or >100 LOC | @opus |
-| Security/credentials/auth | @opus |
-| Ambiguous requirements | @opus |
-| Add/create/implement/fix/test (clear spec) | @codex |
-| Clear spec, ≤2 files, ≤100 LOC | @codex |
-| UI/frontend, config, API endpoints | @codex |
-| Typo, rename, comment, doc updates | @codex |
-| Read-only: research, summarize, explore | @codex |
+| Signal | Tier | Rationale |
+|--------|------|-----------|
+| Refactor, debug, migrate, architecture | capable | Complex reasoning required |
+| Multi-file (>3) or >100 LOC | capable | Large scope needs capable agent |
+| Security/credentials/auth | capable | High stakes, needs verification |
+| Ambiguous requirements | capable | Requires interpretation and tradeoffs |
+| Add/create/implement/fix/test (clear spec) | standard | Well-defined scope |
+| Clear spec, ≤2 files, ≤100 LOC | standard | Standard implementation |
+| UI/frontend, config, API endpoints | standard | Typical dev work |
+| Typo, rename, comment, doc updates | standard | Low risk changes |
+| Read-only: research, summarize, explore | fast | Information gathering only |
 
-Default: @codex
-Any task that writes/edits files → @opus or @codex
-Read-only (gather info) → @codex
+Default: standard
+
+Tier Mapping to Agents (what @swarm dispatches to):
+- capable: @opus → @general (fallback chain)
+- standard: @codex → @general (fallback chain)
+- fast: @codex → @explore → @general (fallback chain)
 
 ## Markdown Task Descriptions
 

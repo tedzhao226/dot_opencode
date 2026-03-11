@@ -35,5 +35,8 @@
       "command": ["docker", "mcp", "gateway", "run"],
       "enabled": true
     }
+  },
+  "experimental": {
+    "batch_tool": true
   }
 }
