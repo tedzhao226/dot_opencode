@@ -71,17 +71,27 @@ them concurrently when they appear in the same response.
 
 Do not start batch N+1 until batch N is fully resolved.
 
+After all tasks in a batch complete, run verification commands from plan.md `## Verification` section:
+- Run test, build, and lint commands
+- If any fail: diagnose, fix inline or mark task failed, re-run verification
+- Only proceed to next batch when verification passes
+
 If a task fails:
 - Mark status: failed in TOON block
 - Mark dependents: blocked
 - Record in progress.md
 - Ask user before continuing
 
+If verification fails but all tasks reported success:
+- Identify which task's changes broke verification
+- Mark that task: failed, retry with error context
+- Apply failure policy (see below)
+
 ### 5. Update
 
-After each batch:
+After each batch (post-verification):
 - Update task status in plan.md TOON block (in-place)
-- Append results to progress.md
+- Append results + verification output to progress.md
 - Promote durable findings to findings.md
 
 ## Model Dispatch Mapping
@@ -96,6 +106,35 @@ TOON `model` field uses capability tiers, mapped to agents:
 
 @general and @explore are built-in (always available, inherit session model).
 If the preferred agent doesn't exist, try the next in the chain.
+
+## Subagent Prompt Template
+
+When dispatching a task to a subagent, structure the prompt:
+
+```
+## Project Rules
+{paste relevant sections from AGENTS.md — approach, build, verify}
+
+## File Rules
+{if task touches .py files, include: "Read rules/python.md before editing"}
+{match file types to rules from AGENTS.md File Rules section}
+
+## Task
+{task title and description from plan.md}
+
+Primary file: {file field from TOON, if set}
+
+## Context
+{relevant excerpts from findings.md — only what this task needs}
+
+## Verification
+{commands from plan.md ## Verification section}
+
+Run verification commands after completing your changes.
+```
+
+Read AGENTS.md once at the start of execution. Reuse across all dispatches.
+Only include File Rules entries matching the file types the task will touch.
 
 ## Resume Support
 
@@ -149,10 +188,14 @@ Update progress.md after each batch:
 ## Completion
 
 When all tasks done:
-1. Update plan.md — mark all tasks: done
-2. Final progress.md entry
-3. Summary: what was accomplished, any blockers, next recommendations
-4. Suggest: promote durable findings to project memory
+1. Run full verification suite (all commands from plan.md `## Verification`)
+2. Update plan.md — mark all tasks: done
+3. Final progress.md entry with verification output
+4. Summary: what was accomplished, any blockers, next recommendations
+5. Suggest next steps:
+   - Commit the changes
+   - Create a PR if on a feature branch
+   - Promote durable findings to project memory
 
 ## Common Mistakes to Avoid
 

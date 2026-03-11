@@ -123,6 +123,30 @@ Maximize parallelism:
 - Research tasks are always parallelizable
 - Target: ≥50% of tasks parallelizable
 
+## Verification
+
+plan.md must include a `## Verification` section listing commands discovered during research:
+
+```
+## Verification
+
+```sh
+# test
+npm test
+
+# build
+npm run build
+
+# lint
+npm run lint
+```
+```
+
+Discover these by checking package.json scripts, Makefile targets, pyproject.toml, CI configs, or README.
+If no commands found, note that and suggest the user fill them in before @swarm runs.
+
+@swarm uses this section to gate batch transitions and validate completion.
+
 ## Handoff
 
 After writing all three files, output:
