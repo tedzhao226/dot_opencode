@@ -20,6 +20,10 @@ When designing classes or interfaces:
 **Banned words** (in docstrings, comments, commit messages):
 `consolidate`, `modernize`, `streamline`, `flexible`, `delve`, `establish`, `enhanced`, `comprehensive`, `optimize`
 
+## CLI
+
+Use the rtk skill for all shell commands.
+
 ## Build
 
 Minimum code that solves the problem. Nothing speculative.
