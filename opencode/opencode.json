@@ -10,7 +10,9 @@
       "chmod 777 *": "deny",
       "git push --force *": "deny",
       "git reset --hard *": "deny",
+      "rtk git push --force *": "deny",
       "git push *": "ask",
+      "rtk git push *": "ask",
       "gh repo delete *": "ask"
     }
   },
