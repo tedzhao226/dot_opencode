@@ -33,7 +33,7 @@ Required files: plan.md | findings.md | progress.md
 
 Read plan.md:
 - Find TOON `tasks[N]{...}:` block
-- Extract fields per row: id, title, depends_on, status, model, size, file
+- Extract fields per row: id, title, depends_on, status, size, type, file
 - Build dependency graph from depends_on field
 
 ### 2. Batch
@@ -53,11 +53,21 @@ Wrap all task dispatches for the batch in a single `batch` tool call:
 
 ```
 batch([
-  { tool: "task", args: { subagent_type: "<agent>", description: "T1: ...", prompt: "..." } },
-  { tool: "task", args: { subagent_type: "<agent>", description: "T2: ...", prompt: "..." } },
+  { tool: "task", args: { 
+    subagent_type: "<subagent>", 
+    description: "T1: ...", 
+    prompt: "..." 
+  } },
+  { tool: "task", args: { 
+    subagent_type: "<subagent>", 
+    description: "T2: ...", 
+    prompt: "..." 
+  } },
   ...
 ])
 ```
+
+Subagent values: `opus46` (L), `sonnet` (M), `gpt54` (code review), `kimi2p5` (S/default)
 
 All tasks in the batch execute concurrently via Promise.all.
 
@@ -94,18 +104,40 @@ After each batch (post-verification):
 - Append results + verification output to progress.md
 - Promote durable findings to findings.md
 
-## Model Dispatch Mapping
+## Subagent Dispatch
 
-TOON `model` field uses capability tiers, mapped to agents:
+Map task `size` and `type` from TOON to model-bound subagents. Each subagent has exactly one model.
 
-| Tier       | Meaning                              | Agent priority (first available)     |
-|------------|--------------------------------------|--------------------------------------|
-| capable    | Architecture, complex, multi-file    | @opus → @general                     |
-| standard   | Clear-spec impl, reviews, tests      | @codex → @general                    |
-| fast       | Read-only, research, trivial fixes   | @codex → @explore → @general         |
+### Subagent Roster
 
-@general and @explore are built-in (always available, inherit session model).
-If the preferred agent doesn't exist, try the next in the chain.
+| Subagent | Model | Effort | Purpose |
+|----------|-------|--------|---------|
+| @opus46 | anthropic/claude-opus-4-6 | medium | L tasks: architecture, complex, multi-file |
+| @sonnet | anthropic/claude-sonnet-4 | medium | M tasks: features, integration, clear specs |
+| @gpt54 | openai/gpt-5.4 | high | Code reviews (any size) |
+| @kimi2p5 | kimi/kimi-2.5 | default | S tasks: trivial fixes, docs, research |
+
+Built-in fallbacks: `@explore` / `@general` (inherit session model)
+
+### Dispatch Logic
+
+```
+IF type == "review":
+  subagent = "gpt54"
+ELSE:
+  SWITCH size:
+    "L" → subagent = "opus46"
+    "M" → subagent = "sonnet"
+    "S" | default → subagent = "kimi2p5"
+```
+
+### Fallback Chains
+
+If preferred subagent is unavailable:
+- review → @gpt54 → @sonnet → @kimi2p5
+- L → @opus46 → @sonnet → @kimi2p5
+- M → @sonnet → @kimi2p5
+- S → @kimi2p5 → @explore → @general
 
 ## Subagent Prompt Template
 
@@ -155,19 +187,25 @@ When user asks for preview (--dry-run):
 Output format:
 ```
 Batch 1 (parallel):
-  - T1: Research auth patterns [@explore, micro]
-  - T2: Analyze config structure [@general, micro]
+  - T1: Research auth patterns [@kimi2p5, S, research]
+  - T2: Analyze config structure [@kimi2p5, S, research]
 
 Batch 2 (parallel):
-  - T3: Implement JWT validation [@opus, medium, src/auth.py]
-  - T4: Add error handling [@codex, micro, src/errors.py]
+  - T3: Implement JWT validation [@opus46, L, impl, src/auth.py]
+  - T4: Add error handling [@sonnet, M, impl, src/errors.py]
+
+Batch 3:
+  - T5: Code review PR #42 [@gpt54, M, review, src/auth.py]
 ```
 
 ## Failure Policy
 
 - 1st failure: diagnose, record in progress.md, retry once
-- 2nd failure: change approach or escalate to tier with more capability (capable tier)
+- 2nd failure: change approach or escalate to next size tier
 - 3rd failure: stop, surface to user with full context
+
+**Escalation path:** S (@kimi2p5) → M (@sonnet) → L (@opus46)
+**Review escalation:** @gpt54 → @opus46
 
 ## Progress Tracking
 
@@ -182,7 +220,7 @@ Update progress.md after each batch:
 - [10:35] Batch 2 started: T3, T4 in_progress
 - [10:42] T4 complete
 - [10:45] T3 failed: auth library version mismatch
-- [10:46] Escalated to @opus for T3 re-implementation
+- [10:46] Escalated to @opus46 for T3 re-implementation
 ```
 
 ## Completion

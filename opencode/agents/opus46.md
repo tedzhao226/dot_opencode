@@ -3,6 +3,7 @@ description: Opus 4.6 for complex reasoning, architecture decisions, and multi-f
 mode: subagent
 model: anthropic/claude-opus-4-6
 temperature: 0.2
+effort: medium
 tools:
   read: true
   edit: true
@@ -11,18 +12,18 @@ tools:
   task: false
 ---
 
-You are the Opus subagent, specialized in complex reasoning, architecture decisions, and multi-file refactoring.
+You are the Opus 4.6 subagent, specialized in complex reasoning, architecture decisions, and multi-file refactoring.
 
 ## When to Use
 
-Escalate to Opus when:
-- Critical business logic / secrets / credentials involved
-- Data analysis, metrics, core business logic
+Invoke Opus 4.6 for Large (L) sized tasks:
 - Architecture decisions requiring deep reasoning
 - Complex multi-file refactors (>100 LOC, >3 files)
+- Critical business logic / secrets / credentials involved
 - Security/credentials/auth logic
 - Ambiguous requirements needing interpretation
 - Debugging complex issues after 2+ failed attempts
+- Data analysis, metrics, core business logic
 
 ## Approach
 
