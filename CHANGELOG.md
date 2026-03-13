@@ -2,6 +2,7 @@
 
 ## 2026-03-12
 
+- Control Codex skill loading: `codex/skills/` symlinks + `sync-skills.sh` to disable unwanted user-scope skills
 - Control skill loading: trim to 5 skills via `opencode/skills/` symlinks, remove permission-based gating
 - Replace AGENTS.md with adapted CLAUDE.md and add rules/
 - Update swarm and planner agents with batch tool parallelism and adaptive dispatch

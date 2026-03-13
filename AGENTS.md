@@ -16,8 +16,8 @@ Configuration and skills for opencode CLI agent.
 ## What This Does
 
 - **AGENTS.md** - Core instructions for opencode agent behavior
-- **opencode.json** - MCP servers (serena, chrome-devtools, context7)
-- **skills/** - Reusable workflows for common tasks
+- **opencode.json** - MCP servers (serena, chrome-devtools, mcp-docker)
+- **skills/** - Curated symlinks generated from `dot_skills`
 
 ## Key Features
 

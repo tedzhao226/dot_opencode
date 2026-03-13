@@ -1,0 +1,1 @@
+Useful commands for this repo: `opencode mcp list` to verify MCP servers; standard git inspection commands; read/edit config files under `opencode/`; sync repo contents to `~/.config/opencode/` via chezmoi or manual copy as noted in README.

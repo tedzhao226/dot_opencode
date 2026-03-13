@@ -112,10 +112,10 @@ Map task `size` and `type` from TOON to model-bound subagents. Each subagent has
 
 | Subagent | Model | Effort | Purpose |
 |----------|-------|--------|---------|
-| @opus46 | anthropic/claude-opus-4-6 | medium | L tasks: architecture, complex, multi-file |
-| @sonnet | anthropic/claude-sonnet-4 | medium | M tasks: features, integration, clear specs |
-| @gpt54 | openai/gpt-5.4 | high | Code reviews (any size) |
-| @kimi2p5 | kimi/kimi-2.5 | default | S tasks: trivial fixes, docs, research |
+| @opus46 | claude-opus-4-6 | medium | L tasks: architecture, complex, multi-file |
+| @sonnet | claude-sonnet-4 | medium | M tasks: features, integration, clear specs |
+| @gpt54 | gpt-5.4 | high | Code reviews (any size) |
+| @kimi2p5 | kimi-k2.5 | default | S tasks: trivial fixes, docs, research |
 
 Built-in fallbacks: `@explore` / `@general` (inherit session model)
 

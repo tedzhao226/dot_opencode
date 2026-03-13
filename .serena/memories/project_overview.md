@@ -1,0 +1,1 @@
+dot_opencode stores configuration for the opencode CLI agent. Main files are opencode/opencode.json for permissions and MCP config, opencode/AGENTS.md for agent guidance, and README.md for setup log/changelog. Repo syncs to ~/.config/opencode/. Tech stack is mostly JSON and Markdown configuration.

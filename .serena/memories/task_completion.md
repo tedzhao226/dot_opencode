@@ -1,0 +1,1 @@
+After code/config changes, run the relevant verification and the full test suite if the project has tests. For this config repo, verify changed JSON/Markdown content and any opencode behavior impacted by the config, then report exact checks performed.

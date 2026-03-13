@@ -1,0 +1,1 @@
+Keep changes surgical. Match existing style. Use minimum code needed. Prefer specialized tools over shell for file work. Use rtk skill for shell commands. Avoid unrelated refactors. Follow AGENTS.md constraints and file-specific rules when editing matching file types.
